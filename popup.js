@@ -5,7 +5,7 @@ function update() {
         var currTab = tabs[0];
         if (currTab) {
             chrome.tabs.sendMessage(currTab.id, {text: "participants"}, function(result) {
-                chrome.storage.sync.get("list", ({ list }) => {
+                chrome.storage.local.get("list", ({ list }) => {
                     set.innerHTML = '';
                     let legend = document.createElement("span");
                     legend.innerHTML = "&#9989; 출석 / &#10060; 결석<br>(0명 출석, 0명 결석)";
