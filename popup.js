@@ -11,7 +11,7 @@ function update() {
         if (currTab) {
             chrome.tabs.sendMessage(currTab.id, {text: "participants"}, function(result) {
                 set.innerHTML = '';
-                if (result == null) {
+                if (result == null || chrome.runtime.lastError) {
                     let oops = document.createElement("span");
                     oops.innerHTML = "참여자 정보를 가져올 수 없습니다.<br>";
                     let info = document.createElement("span");
