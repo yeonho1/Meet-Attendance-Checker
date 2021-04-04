@@ -5,6 +5,23 @@ optionButton.addEventListener('click', function() {
     chrome.runtime.openOptionsPage();
 })
 
+const copyToClipBoard = (str) =>
+{
+    const el = document.createElement('textarea');
+    el.value = str;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+};
+
+function copyClick() {
+    copyToClipBoard(set.innerText);
+}
+
+let copyButton = document.getElementById("copy");
+copyButton.addEventListener('click', copyClick);
+
 function update() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var currTab = tabs[0];
