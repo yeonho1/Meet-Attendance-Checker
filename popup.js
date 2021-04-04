@@ -1,5 +1,10 @@
 let set = document.getElementById("attendance_list");
 
+let optionButton = document.getElementById("openOptions");
+optionButton.addEventListener('click', function() {
+    chrome.runtime.openOptionsPage();
+})
+
 function update() {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var currTab = tabs[0];
