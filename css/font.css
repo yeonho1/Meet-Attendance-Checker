@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Nanum Gothic';
+    src: url(fonts/NanumGothic.woff);
+}
+
+.font {
+    font-family: 'Nanum Gothic';
+    font-size: 12px;
+}

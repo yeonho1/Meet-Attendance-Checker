@@ -1,8 +1,13 @@
 body {
-    width: 230px;
+    width: 240px;
     height: 50px;
     font-size: 12px;
 }
+
 button {
     width: 100%;
+}
+
+.margins {
+    width: 90%;
 }
