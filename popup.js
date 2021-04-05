@@ -39,7 +39,11 @@ function update() {
                         var att_count = 0;
                         var abs_count = 0;
                         let allString = "";
+                        var maxLength = 0;
                         for (i = 0; i < l.length; i++) {
+                            if (l[i].length > maxLength) {
+                                maxLength = l[i].length;
+                            }
                             var emoji = " &#10060; ";
                             let style = ""
                             if (result.includes(l[i])) {
@@ -58,6 +62,8 @@ function update() {
                         }
                         allString = "&#9989; 출석 / &#10060; 결석<br>(" + att_count + "명 출석, " + abs_count + "명 결석)<br>" + allString;
                         set.innerHTML = allString;
+                        var width = 36 * (maxLength + 1) + 10;
+                        document.getElementById("body").style.width = width + "px";
                         copyButton.disabled = false;
                     });
                 }
