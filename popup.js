@@ -65,6 +65,7 @@ function update() {
                                     var abs_count = 0;
                                     let allString = "";
                                     var maxLength = 0;
+                                    var curr_modulo = 0;
                                     for (var j = 0; j < l.length; j++) {
                                         if (l[j].length > maxLength) {
                                             maxLength = l[j].length;
@@ -84,7 +85,8 @@ function update() {
                                         }
                                         allString += "<td><span style='" + style + "'>" + l[j] + "</span>";
                                         allString += "<span>" + emoji + "</span></td>";
-                                        if ((j + 1) % 3 == 0) {
+                                        curr_modulo = (j+1) % 3;
+                                        if (curr_modulo == 0) {
                                             allString += "</tr>"
                                         }
                                     }
@@ -100,41 +102,6 @@ function update() {
                                 }
                             }
                         })
-                        /*
-                        chrome.storage.local.get("list", ({ list }) => {
-                            var l = JSON.parse(list);
-                            var i;
-                            var att_count = 0;
-                            var abs_count = 0;
-                            let allString = "";
-                            var maxLength = 0;
-                            for (i = 0; i < l.length; i++) {
-                                if (l[i].length > maxLength) {
-                                    maxLength = l[i].length;
-                                }
-                                var emoji = " &#10060; ";
-                                let style = ""
-                                if (result.includes(l[i])) {
-                                    emoji = " &#9989; ";
-                                    style = "color: green;";
-                                    att_count += 1;
-                                } else {
-                                    style = "color: red;";
-                                    abs_count += 1;
-                                }
-                                allString += "<span style='" + style + "'>" + l[i] + "</span>";
-                                allString += "<span>" + emoji + "</span>";
-                                if ((i + 1) % 3 == 0) {
-                                    allString += "<br>"
-                                }
-                            }
-                            allString = "&#9989; 출석 / &#10060; 결석<br>(" + att_count + "명 출석, " + abs_count + "명 결석)<br>" + allString;
-                            set.innerHTML = allString;
-                            var width = 36 * (maxLength + 1) + 10;
-                            document.getElementById("body").style.width = width + "px";
-                            copyButton.disabled = false;
-                        });
-                        */
                     }
                 }
             });
