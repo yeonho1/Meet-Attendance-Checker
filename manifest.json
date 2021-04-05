@@ -1,7 +1,7 @@
 {
     "name": "Google Meet 자동 출석체크",
     "description": "Google Meet에서 출석/결석자 목록을 보여줍니다.",
-    "version": "1.0",
+    "version": "1.1",
     "manifest_version": 3,
     "background": {
         "service_worker": "js/background.js"
