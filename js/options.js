@@ -62,6 +62,7 @@ function updateClasses() {
 let remove_yes = document.getElementById("removeClass_yes");
 remove_yes.addEventListener("click", function() {
     $("div#class-" + $("#removeClass_id").val()).remove();
+    $("#removeClass_alert").show();
 });
 
 function createClass(name = "새로운 학급") {
