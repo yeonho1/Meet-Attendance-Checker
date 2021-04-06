@@ -15,8 +15,30 @@ const copyToClipBoard = (str) =>
     document.body.removeChild(el);
 };
 
+var attText = "";
+var absText = "";
+var countText = "";
+
 function copyClick() {
-    copyToClipBoard(set.innerText);
+    chrome.storage.local.get("when_copy", ({ when_copy }) => {
+        switch(when_copy) {
+            case "copy-all":
+                copyToClipBoard(set.innerText);
+                break;
+            case "copy-att":
+                copyToClipBoard(attText);
+                break;
+            case "copy-abs":
+                copyToClipBoard(absText);
+                break;
+            case "copy-stat":
+                copyToClipBoard(countText);
+                break;
+            default:
+                copyToClipBoard(set.innerText);
+                break;
+        }
+    });
 }
 
 let copyButton = document.getElementById("copy");
@@ -71,49 +93,59 @@ function update() {
                         copyButton.disabled = true;
                     } else {
                         chrome.storage.local.get("classes", ({ classes }) => {
-                            for (var i = 0; i < classes.length; i++) {
-                                if (classes[i].id == currClass) {
-                                    let l = classes[i].people;
-                                    var att_count = 0;
-                                    var abs_count = 0;
-                                    let allString = "";
-                                    var maxLength = 0;
-                                    var curr_modulo = 0;
-                                    for (var j = 0; j < l.length; j++) {
-                                        if (l[j].length > maxLength) {
-                                            maxLength = l[j].length;
+                            chrome.storage.local.get("when_copy", ({ when_copy }) => {
+                                for (var i = 0; i < classes.length; i++) {
+                                    if (classes[i].id == currClass) {
+                                        let l = classes[i].people;
+                                        var att_count = 0;
+                                        var abs_count = 0;
+                                        let allString = "";
+                                        var maxLength = 0;
+                                        var curr_modulo = 0;
+                                        attText = "";
+                                        absText = "";
+                                        countText = "";
+                                        for (var j = 0; j < l.length; j++) {
+                                            if (l[j].length > maxLength) {
+                                                maxLength = l[j].length;
+                                            }
+                                            if (allString.endsWith("</tr>")) {
+                                                allString += "<tr>";
+                                            }
+                                            var emoji = " &#10060; ";
+                                            let style = ""
+                                            if (result.includes(l[j])) {
+                                                emoji = " &#9989; ";
+                                                style = "color: green;";
+                                                attText += "\n" + l[j];
+                                                att_count += 1;
+                                            } else {
+                                                style = "color: red;";
+                                                absText += "\n" + l[j];
+                                                abs_count += 1;
+                                            }
+                                            allString += "<td><span style='" + style + "'>" + l[j] + "</span>";
+                                            allString += "<span>" + emoji + "</span></td>";
+                                            curr_modulo = (j+1) % 3;
+                                            if (curr_modulo == 0) {
+                                                allString += "</tr>"
+                                            }
                                         }
-                                        if (allString.endsWith("</tr>")) {
-                                            allString += "<tr>";
+                                        if (!(allString.endsWith("</tr>"))) {
+                                            allString += "</tr>";
                                         }
-                                        var emoji = " &#10060; ";
-                                        let style = ""
-                                        if (result.includes(l[j])) {
-                                            emoji = " &#9989; ";
-                                            style = "color: green;";
-                                            att_count += 1;
-                                        } else {
-                                            style = "color: red;";
-                                            abs_count += 1;
-                                        }
-                                        allString += "<td><span style='" + style + "'>" + l[j] + "</span>";
-                                        allString += "<span>" + emoji + "</span></td>";
-                                        curr_modulo = (j+1) % 3;
-                                        if (curr_modulo == 0) {
-                                            allString += "</tr>"
-                                        }
+                                        attText = "<출석 학생 명단 (총 " + att_count + "명)>" + attText + "\n<출석 명단 끝>";
+                                        absText = "<결석 학생 명단 (총 " + abs_count + "명)>" + absText + "\n<결석 명단 끝>"
+                                        allString = "<tr><td colspan='3'>&#9989; 출석 / &#10060; 결석<br>(" + att_count + "명 출석, " + abs_count + "명 결석)</td></tr>" + allString;
+                                        countText = "" + att_count + "명 출석, " + abs_count + "명 결석";
+                                        set.innerHTML = allString;
+                                        var width = 36 * (maxLength + 1) + 100;
+                                        document.getElementById("body").style.width = width + "px";
+                                        copyButton.disabled = false;
+                                        break;
                                     }
-                                    if (!(allString.endsWith("</tr>"))) {
-                                        allString += "</tr>";
-                                    }
-                                    allString = "<tr><td colspan='3'>&#9989; 출석 / &#10060; 결석<br>(" + att_count + "명 출석, " + abs_count + "명 결석)</td></tr>" + allString;
-                                    set.innerHTML = allString;
-                                    var width = 36 * (maxLength + 1) + 100;
-                                    document.getElementById("body").style.width = width + "px";
-                                    copyButton.disabled = false;
-                                    break;
                                 }
-                            }
+                            });
                         })
                     }
                 }
