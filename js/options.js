@@ -1,20 +1,3 @@
-/*
-function onSaveClick(event) {
-    var list = JSON.stringify(document.getElementById("list_text").value.split(/\r?\n/));
-    console.log(list);
-    chrome.storage.local.set({ list });
-}
-
-let textfield = document.getElementById('list_text');
-
-let saveButton = document.getElementById("save");
-saveButton.addEventListener('click', onSaveClick);
-
-chrome.storage.local.get("list", ({ list }) => {
-    textfield.value = JSON.parse(list).join('\n');
-})
-*/
-
 let class_list = document.getElementById("class_list");
 
 function updateClasses() {
@@ -114,6 +97,18 @@ saveButton.addEventListener('click', function() {
         classes.push({"id": id, "name": name, "people": people})
     }
     chrome.storage.local.set({ "classes": classes });
+});
+
+let whenCopy = document.getElementById("when_copy");
+whenCopy.addEventListener("change", function() {
+    chrome.storage.local.set({"when_copy": whenCopy.value});
+});
+chrome.storage.local.get("when_copy", ({ when_copy }) => {
+    if (when_copy == undefined) {
+        when_copy = "copy-all";
+        chrome.storage.local.set({"when_copy": "copy-all"});
+    }
+    whenCopy.value = when_copy;
 });
 
 document.getElementById("createClass_name").value = defaultName;
