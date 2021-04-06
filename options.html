@@ -23,8 +23,25 @@
                             <span>학급 이름 </span><input id="createClass_name" type="text" style="width: 75%;"><br>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="createClass_submit" class="btn btn-primary font" data-dismiss="modal">추가</button>
                             <button type="button" class="btn btn-danger font" data-dismiss="modal">취소</button>
+                            <button type="button" id="createClass_submit" class="btn btn-primary font" data-dismiss="modal">추가</button>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="removeClass" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">학급 삭제하기</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span>정말로 <strong id="removeClass_name">""</strong> 학급을 삭제하시겠습니까?</span><br>
+                            <input type="hidden" id="removeClass_id" value="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary font" data-dismiss="modal">취소</button>
+                            <button type="button" id="removeClass_yes" class="btn btn-danger font" data-dismiss="modal">삭제</button>
                         </div>
                     </div>
                 </div>

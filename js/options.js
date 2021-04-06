@@ -43,7 +43,11 @@ function updateClasses() {
                 delete_button.innerHTML = "삭제";
                 delete_button.id = "delete-" + classes[i].id;
                 delete_button.addEventListener("click", function() {
-                    this.parentElement.parentElement.remove();
+                    var name = $(this).parent().siblings("button")[0].innerHTML;
+                    var id = $(this).parent().siblings("button")[0].id.replace("collapsible-", "");
+                    $("#removeClass_name").html('"' + name + '"');
+                    $("#removeClass_id").val(id);
+                    $("#removeClass").modal();
                 });
                 content_div.appendChild(delete_button);
                 content_div.appendChild(document.createElement("hr"));
@@ -54,6 +58,11 @@ function updateClasses() {
         }
     });
 }
+
+let remove_yes = document.getElementById("removeClass_yes");
+remove_yes.addEventListener("click", function() {
+    $("div#class-" + $("#removeClass_id").val()).remove();
+});
 
 function createClass(name = "새로운 학급") {
     chrome.storage.local.get("classes", ({ classes }) => {
