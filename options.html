@@ -8,6 +8,7 @@
     </head>
     <body>
         <div id="body" class="container font" style="margin: 10px; padding: 0;">
+            <h4>학급 관리</h4>
             <div id="class_list" class="container" style="margin-left: 0; padding-left: 0; margin-right: 20%;"></div><hr>
 
             <!-- 학급 추가하기 버튼/다이얼로그 -->
@@ -29,6 +30,15 @@
                 </div>
             </div>
             <button id="save" class="btn btn-success font">저장</button>
+            <hr>
+            <h4>기타 설정</h4>
+            <span>복사 버튼 클릭 시:</span>
+            <select name="when_copy" id="when_copy">
+                <option value="copy-all">출석부 전체 복사하기</option>
+                <option value="copy-att">출석 인원만 복사하기</option>
+                <option value="copy-abs">결석 인원만 복사하기</option>
+                <option value="copy-stat">출결 통계만 복사하기</option>
+            </select>
         </div>
 
         <!-- 스크립트들 -->
