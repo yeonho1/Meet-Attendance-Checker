@@ -31,12 +31,25 @@ function updateClasses() {
         console.log(classes);
         var i;
         dropdown.innerHTML = '<option value="nothing">-</option>';
-        for (i = 0; i < classes.length; i++) {
-            let option = document.createElement("option");
-            option.value = "class-" + classes[i].id;
-            option.innerHTML = classes[i].name;
-            dropdown.appendChild(option);
-        }
+        chrome.storage.local.get("lastclass", ({ lastclass }) => {
+            var value = "nothing";
+            for (i = 0; i < classes.length; i++) {
+                let option = document.createElement("option");
+                option.value = "class-" + classes[i].id;
+                if (classes[i].id == lastclass) {
+                    value = "class-" + classes[i].id;
+                }
+                option.innerHTML = classes[i].name;
+                dropdown.appendChild(option);
+            }
+            dropdown.value = value;
+            if (value == "nothing") {
+                chrome.storage.local.set({"lastclass": 0});
+            } else {
+                currClass = parseInt(value.replace("class-", ""));
+            }
+            update();
+        });
     });
 }
 
@@ -112,6 +125,7 @@ function update() {
 dropdown.addEventListener("change", function() {
     if (dropdown.value.includes("class-")) {
         currClass = parseInt(dropdown.value.replace("class-", ""));
+        chrome.storage.local.set({"lastclass": currClass});
     } else {
         currClass = -1;
     }

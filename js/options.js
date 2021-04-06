@@ -72,7 +72,7 @@ function updateClasses() {
     });
 }
 
-function createClass(name = "새로운 클래스") {
+function createClass(name = "새로운 학급") {
     chrome.storage.local.get("classes", ({ classes }) => {
         if (classes == undefined) {
             classes = [];
@@ -90,7 +90,7 @@ function createClass(name = "새로운 클래스") {
     });
 }
 
-let defaultName = "새로운 클래스";
+let defaultName = "새로운 학급";
 
 let newButton = document.getElementById("createClass_submit");
 newButton.addEventListener('click', function() {
