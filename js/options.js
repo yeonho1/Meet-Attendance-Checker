@@ -1,5 +1,18 @@
 let class_list = document.getElementById("class_list");
 
+function save() {
+    let divs = document.getElementsByClassName("class-element");
+    var classes = [];
+    for (var i = 0; i < divs.length; i++) {
+        let people = divs[i].getElementsByTagName("div")[0].getElementsByTagName("textarea")[0].value.split(/\r?\n/);
+        let button = divs[i].getElementsByClassName("collapsible")[0];
+        let id = parseInt(button.id.replace("collapsible-", ""));
+        let name = button.innerText;
+        classes.push({"id": id, "name": name, "people": people})
+    }
+    chrome.storage.local.set({ "classes": classes });
+}
+
 function updateClasses() {
     chrome.storage.local.get("classes", ({ classes }) => {
         console.log(classes)
@@ -62,7 +75,7 @@ function updateClasses() {
 let remove_yes = document.getElementById("removeClass_yes");
 remove_yes.addEventListener("click", function() {
     $("div#class-" + $("#removeClass_id").val()).remove();
-    $("#removeClass_alert").show();
+    save();
 });
 
 function createClass(name = "새로운 학급") {
@@ -96,18 +109,7 @@ newButton.addEventListener('click', function() {
 });
 
 let saveButton = document.getElementById("save");
-saveButton.addEventListener('click', function() {
-    let divs = document.getElementsByClassName("class-element");
-    var classes = [];
-    for (var i = 0; i < divs.length; i++) {
-        let people = divs[i].getElementsByTagName("div")[0].getElementsByTagName("textarea")[0].value.split(/\r?\n/);
-        let button = divs[i].getElementsByClassName("collapsible")[0];
-        let id = parseInt(button.id.replace("collapsible-", ""));
-        let name = button.innerText;
-        classes.push({"id": id, "name": name, "people": people})
-    }
-    chrome.storage.local.set({ "classes": classes });
-});
+saveButton.addEventListener('click',);
 
 let whenCopy = document.getElementById("when_copy");
 whenCopy.addEventListener("change", function() {
