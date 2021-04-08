@@ -109,7 +109,7 @@ newButton.addEventListener('click', function() {
 });
 
 let saveButton = document.getElementById("save");
-saveButton.addEventListener('click',);
+saveButton.addEventListener('click',save);
 
 let whenCopy = document.getElementById("when_copy");
 whenCopy.addEventListener("change", function() {

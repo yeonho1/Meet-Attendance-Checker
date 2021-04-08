@@ -94,6 +94,23 @@ function update() {
                     } else {
                         chrome.storage.local.get("classes", ({ classes }) => {
                             chrome.storage.local.get("when_copy", ({ when_copy }) => {
+                                switch(when_copy) {
+                                    case "copy-all":
+                                        copyButton.innerHTML = "출석부 복사";
+                                        break;
+                                    case "copy-att":
+                                        copyButton.innerHTML = "출석학생 명단 복사";
+                                        break;
+                                    case "copy-abs":
+                                        copyButton.innerHTML = "결석학생 명단 복사";
+                                        break;
+                                    case "copy-stat":
+                                        copyButton.innerHTML = "출결 통계 복사";
+                                        break;
+                                    default:
+                                        copyButton.innerHTML = "출석부 복사";
+                                        break;
+                                }
                                 for (var i = 0; i < classes.length; i++) {
                                     if (classes[i].id == currClass) {
                                         let l = classes[i].people;
