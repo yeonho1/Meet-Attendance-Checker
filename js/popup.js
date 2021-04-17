@@ -123,26 +123,31 @@ function update() {
                                         absText = "";
                                         countText = "";
                                         for (var j = 0; j < l.length; j++) {
-                                            if (l[j].length > maxLength) {
+                                            let searchName = l[j].replace(/(?:⎨)(.*)(?:⎬)/, "");
+                                            let appearName = l[j].replace("⎨", "").replace("⎬", "");
+                                            if (appearName.length > maxLength) {
                                                 maxLength = l[j].length;
                                             }
                                             if (allString.endsWith("</tr>")) {
                                                 allString += "<tr>";
                                             }
                                             var emoji = " &#10060; ";
-                                            let style = ""
-                                            if (result.includes(l[j])) {
+                                            var emojiStyle = "";
+                                            var style = "";
+                                            if (result.includes(searchName)) {
                                                 emoji = " &#9989; ";
                                                 style = "color: green;";
+                                                emojiStyle = "text-shadow: 0 0 0 green;";
                                                 attText += "\n" + l[j];
                                                 att_count += 1;
                                             } else {
                                                 style = "color: red;";
+                                                emojiStyle = "text-shadow: 0 0 0 red;";
                                                 absText += "\n" + l[j];
                                                 abs_count += 1;
                                             }
-                                            allString += "<td><span style='" + style + "'>" + l[j] + "</span>";
-                                            allString += "<span>" + emoji + "</span></td>";
+                                            allString += "<td><span style='" + style + "'>" + appearName + "</span>";
+                                            allString += "<span style='" + emojiStyle + "'>" + emoji + "</span></td>";
                                             curr_modulo = (j+1) % 3;
                                             if (curr_modulo == 0) {
                                                 allString += "</tr>"
@@ -153,7 +158,7 @@ function update() {
                                         }
                                         attText = "<출석 학생 명단 (총 " + att_count + "명)>" + attText + "\n<출석 명단 끝>";
                                         absText = "<결석 학생 명단 (총 " + abs_count + "명)>" + absText + "\n<결석 명단 끝>"
-                                        allString = "<tr><td colspan='3'>&#9989; 출석 / &#10060; 결석<br>(" + att_count + "명 출석, " + abs_count + "명 결석)</td></tr>" + allString;
+                                        allString = "<tr><td colspan='3'><span style='text-shadow: 0 0 0 green'>&#9989;</span> 출석 / <span style='text-shadow: 0 0 0 red'>&#10060;</span> 결석<br>(" + att_count + "명 출석, " + abs_count + "명 결석)</td></tr>" + allString;
                                         countText = "" + att_count + "명 출석, " + abs_count + "명 결석";
                                         set.innerHTML = allString;
                                         var width = 36 * (maxLength + 1) + 100;
